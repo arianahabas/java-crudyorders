@@ -9,6 +9,8 @@ import com.lambdaschool.javaorders.repositories.AgentsRepository;
 import com.lambdaschool.javaorders.repositories.CustomersRepository;
 import com.lambdaschool.javaorders.repositories.OrdersRepository;
 import com.lambdaschool.javaorders.repositories.PaymentRepository;
+import com.lambdaschool.javaorders.services.CustomerService;
+import com.lambdaschool.javaorders.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Component ///comment this out to use data.sql ++ change data.sql from always to never
 public class SeedData implements CommandLineRunner {
+//  @Autowired
+//  private CustomerService customerService;
+//
+//  @Autowired
+//  private PaymentService paymentService;
+
   /**
    * Connects the customer table to this SeedData method
    */
@@ -53,6 +61,9 @@ public class SeedData implements CommandLineRunner {
   @Transactional
   @Override
   public void run(String[] args) throws Exception {
+//    customerService.deleteAllCustomers();
+//    paymentService.deleteAllPayments();
+
     Payment pay1 = new Payment("Cash");
     Payment pay2 = new Payment("Gift Card");
     Payment pay3 = new Payment("Credit Card");

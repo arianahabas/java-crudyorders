@@ -6,4 +6,6 @@ public interface OrdersService {
   Order save (Order order);
 
   Order findByOrderId(long id);
+
+//  void delete(String ordername);
 }

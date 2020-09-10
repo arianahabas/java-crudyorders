@@ -11,15 +11,44 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service(value = "customerService")
 public class CustomerServiceImplementation implements CustomerService{
   @Autowired
   CustomersRepository custrepos;
 
+  //VALIDATE THE DATA!
   @Transactional
   @Override
   public Customer save(Customer customer) {
+    Customer newCustomer = new Customer();
+
+    //single value fields
+    newCustomer.setCustname(customer.getCustname());
+    newCustomer.setCustcity(customer.getCustcity());
+    newCustomer.setWorkingarea(customer.getWorkingarea());
+    newCustomer.setCustcountry(customer.getCustcountry());
+    newCustomer.setGrade(customer.getGrade());
+    newCustomer.setOpeningamt(customer.getOpeningamt());
+    newCustomer.setReceiveamt(customer.getReceiveamt());
+    newCustomer.setPaymentamt(customer.getPaymentamt());
+    newCustomer.setOutstandingamt(customer.getOutstandingamt());
+    newCustomer.setPhone(customer.getPhone());
+
+    //collections
+
     return custrepos.save(customer);
+  }
+
+  @Transactional
+  @Override
+  public void delete(long custcode) {
+    if (custrepos.findById(custcode)
+            .isPresent()){
+      custrepos.deleteById(custcode);
+    } else{
+      throw new EntityNotFoundException("Customer " + custcode + " NOT FOUND!");
+    }
   }
 
   @Override
@@ -46,4 +75,6 @@ public class CustomerServiceImplementation implements CustomerService{
     List<OrderCounts> list = custrepos.findOrderCounts();
     return list;
   }
+
+
 }
