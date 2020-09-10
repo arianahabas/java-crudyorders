@@ -7,5 +7,7 @@ public interface OrdersService {
 
   Order findByOrderId(long id);
 
+  void delete(long ordernum);
+
 //  void delete(String ordername);
 }

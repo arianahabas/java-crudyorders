@@ -1,5 +1,6 @@
 package com.lambdaschool.javaorders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="customers")
+
 
 public class Customer {
   @Id
@@ -21,9 +23,25 @@ public class Customer {
   private String workingarea;
   private String custcountry;
   private String grade;
+
+  @JsonIgnore
+  @Transient
+  public boolean hasvalueforopeningamt = false;
   private double openingamt;
+
+  @JsonIgnore
+  @Transient
+  public boolean hasvalueforreceiveamt = false;
   private double receiveamt;
+
+  @JsonIgnore
+  @Transient
+  public boolean hasvalueforpaymentamt = false;
   private double paymentamt;
+
+  @JsonIgnore
+  @Transient
+  public boolean hasvalueforoutstandingamt = false;
   private double outstandingamt;
   private String phone;
 
@@ -113,6 +131,7 @@ public class Customer {
   }
 
   public void setOpeningamt(double openingamt) {
+    hasvalueforopeningamt = true;
     this.openingamt = openingamt;
   }
 
@@ -121,6 +140,7 @@ public class Customer {
   }
 
   public void setReceiveamt(double receiveamt) {
+    hasvalueforreceiveamt = true;
     this.receiveamt = receiveamt;
   }
 
@@ -129,6 +149,7 @@ public class Customer {
   }
 
   public void setPaymentamt(double paymentamt) {
+    hasvalueforpaymentamt = true;
     this.paymentamt = paymentamt;
   }
 
@@ -137,6 +158,7 @@ public class Customer {
   }
 
   public void setOutstandingamt(double outstandingamt) {
+    hasvalueforoutstandingamt = true;
     this.outstandingamt = outstandingamt;
   }
 

@@ -58,9 +58,11 @@ public class CustomerController {
   }
 
   // POST : http://localhost:2019/customer -> Adds a new customer including any new orders
+  // -> ->  header for new customer - http://localhost:2019/customers/customer/56
   @PostMapping(value = "/customer", consumes = "application/json", produces = "application/json")
   public ResponseEntity<?> addNewCustomer(@Valid
                                           @RequestBody Customer newCustomer){
+    newCustomer.setCustcode(0);
     newCustomer = customerService.save(newCustomer);
     // Response Header -> Location Header = url to the new customer
     HttpHeaders responseHeaders = new HttpHeaders();
@@ -73,5 +75,17 @@ public class CustomerController {
   }
 
   // PUT : http://localhost:2019/customer/{custcode} -> completely replaces the customer record including associated orders with the provided data
-  // PATCH : http://localhost:2019/customer/{custcode} -> updates customers with the new data. Only the new data is to be sent from the frontend client.
+  @PutMapping(value = "/customer/{custcode}" , consumes = "application/json", produces = "application/json")
+  public ResponseEntity<?> updateFullCustomer(@PathVariable long custcode,@Valid @RequestBody Customer updateCustomer){
+    updateCustomer.setCustcode(custcode);
+    updateCustomer = customerService.save(updateCustomer);
+    return new ResponseEntity<>(updateCustomer, HttpStatus.OK);
+  }
+
+  // PATCH : http://localhost:2019/customer/{custcode} -> updates customers with the new data.
+  @PatchMapping(value = "/customer/{custcode}", consumes = "application/json", produces = "application/json")
+  public ResponseEntity<?> updatePartCustomer(@PathVariable long custcode, @RequestBody Customer updateCustomer){
+    updateCustomer = customerService.update(updateCustomer, custcode);
+    return new ResponseEntity<>(updateCustomer,HttpStatus.OK);
+  }
 }
